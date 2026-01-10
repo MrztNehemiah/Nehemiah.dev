@@ -8,20 +8,30 @@
     <script>
     tailwind.config = {
         darkMode: 'class'
-        }
+    }
+    </script>
+    <script>
+        // Initialize theme before page renders to prevent flash
+        (function() {
+            // Check for stored theme preference in sessionStorage
+            const storedTheme = sessionStorage.getItem('theme');
+            if (storedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        })();
     </script>
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-zinc-900 transition-colors">
+<body class="min-h-screen bg-gray-50 dark:bg-black transition-colors">
     <!-- Header -->
     <header class="px-4 sm:px-8 py-4 sm:py-6 flex items-center justify-between">
-        <button 
+        <button
             id="themeToggle"
-            class="w-10 h-10 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-800 text-gray-700 dark:text-white transition-colors"
+            class="w-10 h-10 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 text-gray-700 dark:text-white transition-colors hover:bg-gray-100 dark:hover:bg-zinc-800"
         >
             <span class="dark:hidden">🌙</span>
             <span class="hidden dark:inline">☀️</span>
         </button>
-        
+
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex gap-2 lg:gap-4">
             <button class="px-3 lg:px-4 py-2 rounded-lg text-sm lg:text-base text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -48,17 +58,17 @@
 
     <!-- Mobile Navigation -->
     <nav id="mobileMenu" class="hidden md:hidden px-4 pb-4">
-        <div class="bg-white dark:bg-zinc-800 rounded-lg p-4 space-y-2">
-            <button class="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors">
+        <div class="bg-white dark:bg-zinc-900 rounded-lg p-4 space-y-2">
+            <button class="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
                 ME
             </button>
-            <button class="w-full text-left px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+            <button class="w-full text-left px-4 py-2 bg-gray-900 dark:bg-zinc-800 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-zinc-700 transition-colors">
                 CAREER
             </button>
-            <button class="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors">
+            <button class="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
                 PORTFOLIO
             </button>
-            <button class="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors">
+            <button class="w-full text-left px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
                 RESUME
             </button>
         </div>
@@ -72,16 +82,17 @@
                 src="images/faceless.jpeg"
                 alt="Profile"
                 class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover"
+                onerror="this.style.display='none'"
             />
             <div class="text-center sm:text-left">
                 <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
                     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                         Nehecodes
                     </h1>
-                    <svg 
+                    <svg
                         class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 dark:text-gray-500"
-                        fill="none" 
-                        stroke="currentColor" 
+                        fill="none"
+                        stroke="currentColor"
                         viewBox="0 0 24 24"
                     >
                         <circle cx="12" cy="12" r="10" stroke-width="2"/>
@@ -95,91 +106,346 @@
         </div>
 
         <!-- Bio -->
-        <p class="mb-12 sm:mb-16 leading-relaxed text-sm sm:text-base text-gray-700 dark:text-gray-300 text-center sm:text-left">
-            A Back-end and DevOps Engineer passionate in building Reliable, Scalable and Secure Software and Infrastructure
-        </p>
+        <div class="mb-12 sm:mb-16 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6">
+            <p class="leading-relaxed text-sm sm:text-base text-gray-700 dark:text-gray-300 text-justify">
+                A Back-end and DevOps Engineer passionate in building Reliable, Scalable and Secure Software and Infrastructure
+            </p>
+        </div>
 
         <!-- Tech Stack Section -->
-        <div>
-            <div class="flex flex-col sm:flex-row items-center sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-2xl p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-8">
                 <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                     Tech Stack
                 </h2>
-                
+                <button id="toggleTechStack" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                    Show More ▼
+                </button>
             </div>
 
-
-            <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12 gap-3 sm:gap-4">
-
-                <!-- Python -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">        
-                <img src="https://cdn.simpleicons.org/python" alt="Python" class="w-full h-full">    
+            <div class="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-3 sm:gap-4">
+                <!-- Always visible icons -->
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/html5" alt="HTML5" class="w-full h-full">
                 </div>
-                <!-- Linux -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">        
-                <img src="https://cdn.simpleicons.org/linux" alt="Linux" class="w-full h-full">    
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind CSS" class="w-full h-full">
                 </div>
-                <!-- Docker -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/python" alt="Python" class="w-full h-full">
+                </div>
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/linux/white" alt="Linux" class="w-full h-full dark:invert-0 invert">
+                </div>
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" class="w-full h-full">
+                </div>
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
                     <img src="https://cdn.simpleicons.org/docker" alt="Docker" class="w-full h-full">
                 </div>
-                
-                <!-- Kubernetes -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
                     <img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes" class="w-full h-full">
                 </div>
-                
-                <!-- AWS -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
-                    <img src="https://cdn.simpleicons.org/amazonwebservices" alt="AWS" class="w-full h-full">
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Amazon_Web_Services_2025.svg" alt="AWS" class="w-full h-full object-contain">    </div>
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/ansible/white" alt="Ansible" class="w-full h-full dark:invert-0 invert">
                 </div>
-                
-                <!-- Ansible -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
-                    <img src="https://cdn.simpleicons.org/ansible" alt="Ansible" class="w-full h-full">
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/jenkins/white" alt="Jenkins" class="w-full h-full dark:invert-0 invert">
                 </div>
-                
-                <!-- Jenkins -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
-                    <img src="https://cdn.simpleicons.org/jenkins" alt="Jenkins" class="w-full h-full">
-                </div>
-                
-                <!-- Terraform -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
                     <img src="https://cdn.simpleicons.org/terraform" alt="Terraform" class="w-full h-full">
                 </div>
-                
-                <!-- GitHub Actions -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
-                    <img src="https://cdn.simpleicons.org/githubactions" alt="GitHub Actions" class="w-full h-full">
+
+                <div class="w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110">
+                    <img src="https://cdn.simpleicons.org/githubactions/white" alt="GitHub Actions" class="w-full h-full dark:invert-0 invert">
                 </div>
-                
-                
-                <!-- ArgoCD -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
+
+                <!-- Hidden by default - shown when "Show More" is clicked -->
+                <div class="tech-stack-extra w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110 hidden">
                     <img src="https://cdn.simpleicons.org/argo" alt="ArgoCD" class="w-full h-full">
                 </div>
-                
-                <!-- Grafana -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
+
+                <div class="tech-stack-extra w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110 hidden">
+                    <img src="https://cdn.simpleicons.org/redis" alt="Redis" class="w-full h-full">
+                </div>
+
+                <div class="tech-stack-extra w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110 hidden">
+                    <img src="https://cdn.simpleicons.org/apachekafka/white" alt="Kafka" class="w-full h-full dark:invert-0 invert">
+                </div>
+
+                <div class="tech-stack-extra w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110 hidden">
                     <img src="https://cdn.simpleicons.org/grafana" alt="Grafana" class="w-full h-full">
                 </div>
-                
-                <!-- Prometheus -->
-                <div class="w-full aspect-square rounded-xl flex items-center justify-center p-3 shadow-sm bg-white dark:bg-zinc-800 transition-transform hover:scale-110">
+
+                <div class="tech-stack-extra w-full aspect-square rounded-lg flex items-center justify-center p-2 shadow-sm bg-white dark:bg-zinc-900 transition-transform hover:scale-110 hidden">
                     <img src="https://cdn.simpleicons.org/prometheus" alt="Prometheus" class="w-full h-full">
                 </div>
             </div>
         </div>
+
+        <!-- Journey Section -->
+        <div class="mt-16 sm:mt-20">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-8">
+                Journey
+            </h2>
+
+            <!-- Mobile: Vertical Timeline -->
+            <div class="md:hidden relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-6 top-0 bottom-0 w-0.5 border-l-2 border-dashed border-gray-300 dark:border-zinc-700"></div>
+
+                <!-- Timeline Items -->
+                <div class="space-y-8 relative">
+                    <!-- Item 1 -->
+                    <div class="relative pl-16">
+                        <div class="absolute left-3 w-6 h-6 rounded-full border-2 border-dashed border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-black"></div>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Building and Exploring</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">Q4 2025 -- Present</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                Working on some cool ideas and
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative pl-16">
+                        <div class="absolute left-3 w-6 h-6 rounded-full border-2 border-dashed border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-black"></div>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                                Skill Maxxing
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">
+                                Q2 2025 -- Q4 2025
+                            </p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                getting hands dirty with fullstack and devops tech.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative pl-16">
+                        <div class="absolute left-3 w-6 h-6 rounded-full border-2 border-dashed border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-black"></div>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                                Teaching & Learning
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">
+                                Q4 2024 -- Q2 2025
+                            </p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                teaching intern @ xyz school (math and english) and exploring machine learning along the way.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="relative pl-16">
+                        <div class="absolute left-3 w-6 h-6 rounded-full border-2 border-dashed border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-black"></div>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                                Gigs and Agency
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">
+                                2023 -- 2024
+                            </p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                worked with couple of projects to help them market better, then built dev and marketing agencies and quit.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="relative pl-16">
+                        <div class="absolute left-3 w-6 h-6 rounded-full border-2 border-dashed border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-black"></div>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                                Marketing: web3 and crypto
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">
+                                2022 -- 2023
+                            </p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                I got my interest off with coding and started career in marketing, networking and executing campaigns for diff projects with kols.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="relative pl-16">
+                        <div class="absolute left-3 w-6 h-6 rounded-full border-2 border-dashed border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-black"></div>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                                Founder: ButterLemonBot
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">
+                                2020 -- 2022
+                            </p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                when I first learnt web dev with php, built this for fun and eventually hit 10-15k users across 50+ tg groups.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop: Grid with Connecting Lines -->
+            <div class="hidden md:block relative">
+                <div class="grid grid-cols-2 gap-6 relative">
+
+                    <!-- Left Column -->
+                    <div class="space-y-6 relative">
+
+                        
+                        <!-- Item 1 -->
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Upskilling
+                                </h3>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap ml-4">
+                                    Q4 2025 -- Present
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                Currently, I focus on building and operating production-grade systems, with more focus on Systems design and working with AI
+                            </p>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Moving into Cloud and DevOps
+                                </h3>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap ml-4">
+                                    Q4 2024 -- Q2 2025
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                I moved into cloud computing and DevOps, deploying services on AWS, building CI/CD pipelines and automating deployment workflow.
+                            </p>
+                        </div>
+
+                        <!-- Item 5 -->
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Exploring Backend Development & APIs
+                                </h3>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap ml-4">
+                                    2024
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                I gradually shifted from scripting to building backend systems, developing APIs with Flask and FastAPI.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-6 relative">
+                        <!-- Item 2 -->
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Transition into Coding & Automation
+                                </h3>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap ml-4">
+                                    Q2 2023
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                My curiosity for how systems work led me into coding, where I began using Python to automate tasks and interact with real infrastructure. I worked on network automation projects
+                            </p>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Networks and Routing
+                                </h3>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap ml-4">
+                                    2023
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                I built my networking foundation through CCNA, gaining hands-on experience with routing, switching, subnetting, and network troubleshooting
+                            </p>
+                        </div>
+
+                        <!-- Item 6 -->
+                        <div class="border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl p-6 bg-white dark:bg-zinc-900">
+                            <div class="flex items-start justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                                    Learning
+                                </h3>
+                                <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap ml-4">
+                                    2022
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                Worked with HTML and CSS to structure web pages and style responsive, user-friendly interfaces..
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="mt-16 sm:mt-20">
+            <div class="flex gap-4 justify-center" >
+                <a href="https://github.com/MrztNehemiah" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 text-gray-700 dark:text-white transition-all hover:scale-110 hover:bg-gray-100 dark:hover:bg-zinc-800 shadow-sm">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/nehemiah-daniel-844177231/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 text-gray-700 dark:text-white transition-all hover:scale-110 hover:bg-gray-100 dark:hover:bg-zinc-800 shadow-sm">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/neyheops" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 text-gray-700 dark:text-white transition-all hover:scale-110 hover:bg-gray-100 dark:hover:bg-zinc-800 shadow-sm">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                <a href="https://medium.com/@danielnehemiah15?source=user_profile_page----------------------1d3962b0e008----------------------" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 text-gray-700 dark:text-white transition-all hover:scale-110 hover:bg-gray-100 dark:hover:bg-zinc-800 shadow-sm">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </main>
 
+    <footer class="text-center py-6 bg-white dark:bg-black text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-zinc-800">
+        <p>© <span id="copyrightYear">2026</span> Nehemiah. All Rights Reserved.</p>
+    </footer>
+
     <script>
-        // Dark mode toggle
+        // Dark mode toggle with sessionStorage persistence
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
 
         themeToggle.addEventListener('click', () => {
             html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            sessionStorage.setItem('theme', theme);
         });
 
         // Mobile menu toggle
@@ -190,25 +456,62 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Update age counter
+        // Tech Stack toggle functionality
+        const toggleBtn = document.getElementById('toggleTechStack');
+        const extraItems = document.querySelectorAll('.tech-stack-extra');
+        let isExpanded = false;
+
+        toggleBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            extraItems.forEach(item => item.classList.toggle('hidden'));
+            toggleBtn.textContent = isExpanded ? 'Show Less ▲' : 'Show More ▼';
+        });
+
+        // Update age counter with proper calculation
         function updateAge() {
-            const birthDate = new Date('1998-07-05'); // Adjust this date
-            const now = new Date();
-            const diff = now - birthDate;
-            
-            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('age').textContent = 
-                `${years}y 0m ${days}d ${hours}h ${minutes}m ${seconds}s old`;
+            try {
+                const birthDate = new Date('1998-07-05');
+                const now = new Date();
+
+                // Calculate years
+                let years = now.getFullYear() - birthDate.getFullYear();
+                let months = now.getMonth() - birthDate.getMonth();
+                let days = now.getDate() - birthDate.getDate();
+
+                // Adjust if birthday hasn't occurred this year
+                if (months < 0 || (months === 0 && days < 0)) {
+                    years--;
+                    months += 12;
+                }
+
+                // Adjust days if negative
+                if (days < 0) {
+                    months--;
+                    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                    days += lastMonth.getDate();
+                }
+
+                // Calculate hours, minutes, seconds
+                const diffMs = now - birthDate;
+                const totalSeconds = Math.floor(diffMs / 1000);
+                const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+                const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+                const seconds = totalSeconds % 60;
+
+                document.getElementById('age').textContent =
+                    `${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s old`;
+            } catch (error) {
+                console.error('Error updating age:', error);
+                document.getElementById('age').textContent = '26 years old';
+            }
         }
-        
-        // Update every second
-        setInterval(updateAge, 1000);
+
+        // Update copyright year
+        document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+
+        // Initialize and start age counter
         updateAge();
+        setInterval(updateAge, 1000);
     </script>
 </body>
 </html>
