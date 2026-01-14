@@ -13,4 +13,4 @@ I build and deploy reliable backend services, I write clean APIs and I deal with
 - Improving CI/CD and deployment workflows
 - Building in public and documenting my learning
 
-🔗 [Portfolio & Contact](https://mrztnehemiah.github.io/Nehemiah.dev/)
+🔗 [Portfolio & Contact](https://mrztnehemiah.github.io/nehemiah.dev/)
